@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+frontend/dist/
+frontend/.vite/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Recordings & runtime data
+backend/recordings/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+**/camera-states.json
+
+project.code-workspace

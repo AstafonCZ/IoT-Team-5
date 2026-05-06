@@ -1,0 +1,8 @@
+{
+  "motionEnabled": false,
+  "noMotionSecs": 60,
+  "recordingEnabled": false,
+  "maxStorageGB": 10,
+  "manualRecordMins": 30,
+  "timezone": "Europe/Prague"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "cameraclient-ota-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node ota-server.js",
+    "dev": "node --watch ota-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
