@@ -12,6 +12,11 @@ export default function Settings({ onClose, uiScale = 1.0, onScaleChange, inline
   const [saving,  setSaving]  = useState(false);
   const [saved,   setSaved]   = useState(false);
   const [error,   setError]   = useState('');
+  const [uiScaleInput, setUiScaleInput] = useState(String(Math.round(uiScale * 100)));
+
+  useEffect(() => {
+    setUiScaleInput(String(Math.round(uiScale * 100)));
+  }, [uiScale]);
 
   // Load current settings from the server when the panel opens
   useEffect(() => {
@@ -60,12 +65,16 @@ export default function Settings({ onClose, uiScale = 1.0, onScaleChange, inline
     }
   };
 
-  const handleUiScaleChange = e => {
-    const value = Number(e.target.value);
+  const applyUiScaleInput = () => {
+    const value = Number(uiScaleInput);
 
-    if (!Number.isFinite(value)) return;
+    if (!Number.isFinite(value)) {
+      setUiScaleInput(String(Math.round(uiScale * 100)));
+      return;
+    }
 
     const clamped = Math.min(150, Math.max(70, value));
+    setUiScaleInput(String(clamped));
     onScaleChange(clamped / 100);
   };
 
@@ -179,8 +188,14 @@ export default function Settings({ onClose, uiScale = 1.0, onScaleChange, inline
               min={70}
               max={150}
               step={5}
-              value={Math.round(uiScale * 100)}
-              onChange={handleUiScaleChange}
+              value={uiScaleInput}
+              onChange={e => setUiScaleInput(e.target.value)}
+              onBlur={applyUiScaleInput}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.currentTarget.blur();
+                }
+              }}
               style={{ width: 80 }}
             />
             <span className="settings-row-hint">%</span>
