@@ -60,6 +60,15 @@ export default function Settings({ onClose, uiScale = 1.0, onScaleChange, inline
     }
   };
 
+  const handleUiScaleChange = e => {
+    const value = Number(e.target.value);
+
+    if (!Number.isFinite(value)) return;
+
+    const clamped = Math.min(150, Math.max(70, value));
+    onScaleChange(clamped / 100);
+  };
+
   const panel = (
     <div className={`settings-panel${inline ? ' settings-panel--inline' : ''}`} onClick={e => e.stopPropagation()}>
       <div className="settings-header">
@@ -161,18 +170,21 @@ export default function Settings({ onClose, uiScale = 1.0, onScaleChange, inline
         <label className="settings-row">
           <span className="settings-row-label">
             UI scale
-            <span className="settings-row-hint"> ({Math.round(uiScale * 100)}%)</span>
+            <span className="settings-row-hint"> (70–150%)</span>
           </span>
-          <input
-            className="settings-input"
-            type="range"
-            min={0.7}
-            max={1.5}
-            step={0.05}
-            value={uiScale}
-            onChange={e => onScaleChange(parseFloat(e.target.value))}
-            style={{ width: 120 }}
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <input
+              className="settings-input"
+              type="number"
+              min={70}
+              max={150}
+              step={5}
+              value={Math.round(uiScale * 100)}
+              onChange={handleUiScaleChange}
+              style={{ width: 80 }}
+            />
+            <span className="settings-row-hint">%</span>
+          </div>
         </label>
 
         <div className="settings-section-label">General</div>
@@ -211,4 +223,3 @@ export default function Settings({ onClose, uiScale = 1.0, onScaleChange, inline
     </div>
   );
 }
-
